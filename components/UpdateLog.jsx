@@ -61,14 +61,15 @@ export default function UpdateLog({ logs }) {
                 } else if (data.file.webContentLink) {
                     window.open(data.file.webContentLink, '_blank');
                 } else {
-                    alert('このファイルは開けません');
+                    alert(`ファイル「${fileName}」は開けません`);
                 }
             } else {
-                alert('ファイル情報の取得に失敗しました');
+                // APIからのエラーメッセージを表示
+                alert(data.message || 'ファイル情報の取得に失敗しました');
             }
         } catch (error) {
             console.error('ファイルを開くエラー:', error);
-            alert('ファイルを開けませんでした');
+            alert(`ファイル「${fileName}」を開けませんでした`);
         }
     };
 

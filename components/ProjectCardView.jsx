@@ -1,8 +1,8 @@
 import { getAllProjects } from '../lib/projectManager';
 import styles from '../styles/ProjectCardView.module.css';
 
-export default function ProjectCardView({ onProjectClick }) {
-    const projects = getAllProjects();
+export default function ProjectCardView({ onProjectClick, userId }) {
+    const projects = getAllProjects(userId);
 
     if (projects.length === 0) {
         return (

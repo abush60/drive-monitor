@@ -87,6 +87,9 @@ export default function Home() {
     const [changeLogs, setChangeLogs] = useState([]);
     const [isInitialized, setIsInitialized] = useState(false);
 
+    // ユーザーIDを取得
+    const userId = session?.user?.email || 'anonymous';
+
     // 階層からすべてのファイルを抽出
     const extractAllFiles = useCallback((node) => {
         let files = [];
@@ -111,7 +114,7 @@ export default function Home() {
         const savedState = loadSessionState();
         if (savedState && savedState.projectId) {
             // プロジェクトを取得
-            const project = getProject(savedState.projectId);
+            const project = getProject(savedState.projectId, userId);
             if (project) {
                 setCurrentProject(project);
                 setCurrentSection(savedState.section || 'drive');
@@ -134,7 +137,7 @@ export default function Home() {
             }
         }
         setIsInitialized(true);
-    }, [status, isInitialized]);
+    }, [status, isInitialized, userId]);
 
     // 状態が変わったらセッションを保存
     useEffect(() => {
@@ -208,14 +211,14 @@ export default function Home() {
             }
 
             // プロジェクトを作成
-            const project = createProject(projectName, url, data.folderId);
+            const project = createProject(projectName, url, data.folderId, userId);
 
             // ページトークンを取得
             const tokenResponse = await fetch('/api/drive/pageToken');
             const tokenData = await tokenResponse.json();
 
             if (tokenData.success) {
-                updateProject(project.id, { pageToken: tokenData.pageToken });
+                updateProject(project.id, { pageToken: tokenData.pageToken }, userId);
             }
 
             // Push通知を登録
@@ -235,7 +238,7 @@ export default function Home() {
                     channelId: watchData.channelInfo.channelId,
                     channelResourceId: watchData.channelInfo.resourceId,
                     channelExpiration: watchData.channelInfo.expiration,
-                });
+                }, userId);
             }
 
             // 既存ファイルを更新ログに追加
@@ -302,7 +305,7 @@ export default function Home() {
                     });
 
                     // ページトークンを更新
-                    updateProject(currentProject.id, { pageToken: data.newPageToken });
+                    updateProject(currentProject.id, { pageToken: data.newPageToken }, userId);
                 }
             } catch (error) {
                 console.error('変更チェックエラー:', error);
@@ -315,7 +318,7 @@ export default function Home() {
     const renderContent = () => {
         switch (currentSection) {
             case 'projects':
-                return <ProjectCardView onProjectClick={handleProjectClick} />;
+                return <ProjectCardView onProjectClick={handleProjectClick} userId={userId} />;
 
             case 'drive':
                 return (

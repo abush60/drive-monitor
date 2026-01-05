@@ -11,13 +11,21 @@ export default async function handler(req, res) {
         const session = await getServerSession(req, res, authOptions);
 
         if (!session || !session.accessToken) {
-            return res.status(401).json({ error: 'Unauthorized' });
+            return res.status(401).json({
+                success: false,
+                error: 'Unauthorized',
+                message: '認証が必要です'
+            });
         }
 
         const { fileId } = req.query;
 
         if (!fileId) {
-            return res.status(400).json({ error: 'fileId is required' });
+            return res.status(400).json({
+                success: false,
+                error: 'fileId is required',
+                message: 'ファイルIDが指定されていません'
+            });
         }
 
         const drive = getDriveClient(session.accessToken);
@@ -25,8 +33,17 @@ export default async function handler(req, res) {
         // ファイルのメタデータを取得
         const fileMetadata = await drive.files.get({
             fileId: fileId,
-            fields: 'id, name, mimeType, webContentLink, webViewLink',
+            fields: 'id, name, mimeType, webContentLink, webViewLink, trashed',
         });
+
+        // ファイルが削除されている場合
+        if (fileMetadata.data.trashed) {
+            return res.status(404).json({
+                success: false,
+                error: 'File is trashed',
+                message: 'このファイルは削除されています'
+            });
+        }
 
         return res.status(200).json({
             success: true,
@@ -34,6 +51,28 @@ export default async function handler(req, res) {
         });
     } catch (error) {
         console.error('ファイル情報取得エラー:', error);
-        return res.status(500).json({ error: error.message });
+
+        // Google Drive APIのエラーを詳細に返す
+        if (error.code === 404) {
+            return res.status(404).json({
+                success: false,
+                error: 'File not found',
+                message: 'ファイルが見つかりません'
+            });
+        }
+
+        if (error.code === 403) {
+            return res.status(403).json({
+                success: false,
+                error: 'Permission denied',
+                message: 'ファイルへのアクセス権限がありません'
+            });
+        }
+
+        return res.status(500).json({
+            success: false,
+            error: error.message,
+            message: 'ファイル情報の取得に失敗しました'
+        });
     }
 }
