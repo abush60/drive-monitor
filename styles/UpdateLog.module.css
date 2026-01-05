@@ -1,0 +1,128 @@
+.container {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.filterBar {
+    display: flex;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: var(--color-gray-50);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.filterButton {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-gray-700);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filterButton:hover {
+    background: var(--color-purple-50);
+    border-color: var(--color-purple-400);
+}
+
+.filterButton.active {
+    background: linear-gradient(135deg, var(--color-purple-600) 0%, var(--color-purple-700) 100%);
+    color: var(--color-white);
+    border-color: var(--color-purple-700);
+}
+
+.logList {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+}
+
+.logItem {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    margin-bottom: var(--spacing-sm);
+    cursor: pointer;
+}
+
+.logItem:hover {
+    background: var(--color-purple-50);
+}
+
+.logIcon {
+    flex-shrink: 0;
+}
+
+.logContent {
+    flex: 1;
+    min-width: 0;
+}
+
+.logHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.logUser {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.logBody {
+    margin-bottom: var(--spacing-xs);
+}
+
+.logFileName {
+    font-size: 0.875rem;
+    color: var(--color-gray-700);
+    word-break: break-all;
+}
+
+.logFooter {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.logTime {
+    font-size: 0.75rem;
+    color: var(--color-gray-500);
+}
+
+.deleteButton {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--color-gray-400);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.deleteButton:hover {
+    background: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.emptyState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-2xl);
+    color: var(--color-gray-500);
+}

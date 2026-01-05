@@ -1,0 +1,109 @@
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-purple-200);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.nav {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex: 1;
+    justify-content: center;
+}
+
+.navItem {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-gray-700);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.navItem:hover {
+    background: var(--color-purple-50);
+    color: var(--color-purple-700);
+}
+
+.navItemActive {
+    background: linear-gradient(135deg, var(--color-purple-600) 0%, var(--color-purple-700) 100%);
+    color: var(--color-white);
+    border-color: var(--color-purple-700);
+}
+
+.navItemActive:hover {
+    background: linear-gradient(135deg, var(--color-purple-700) 0%, var(--color-purple-800) 100%);
+}
+
+.userSection {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--color-purple-300);
+}
+
+.userName {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-gray-700);
+}
+
+.logoutButton {
+    font-size: 0.75rem;
+    padding: var(--spacing-xs) var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-wrap: wrap;
+    }
+
+    .nav {
+        order: 3;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .userName {
+        display: none;
+    }
+}
