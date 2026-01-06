@@ -241,6 +241,18 @@ function FolderItem({ folder, depth = 0, expandedFolders, onToggle, onUploadClic
                             key={file.id}
                             className={styles.fileItem}
                             style={{ paddingLeft: `${(depth + 1) * 1.5}rem` }}
+                            onDragOver={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }}
+                            onDragEnter={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }}
+                            onDrop={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }}
                         >
                             <div className={styles.spacer} />
                             <div className={styles.fileIcon}>
@@ -405,7 +417,11 @@ export default function DriveSheet({ hierarchy, isLoading, searchQuery, projectI
     }
 
     return (
-        <div className={styles.container}>
+        <div
+            className={styles.container}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => e.preventDefault()}
+        >
             <input
                 ref={fileInputRef}
                 type="file"
