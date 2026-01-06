@@ -295,7 +295,7 @@ export default function Home() {
         const interval = setInterval(async () => {
             try {
                 const response = await fetch(
-                    `/api/drive/changes?pageToken=${currentProject.pageToken}&projectId=${currentProject.id}`
+                    `/api/drive/changes?pageToken=${currentProject.pageToken}&projectId=${currentProject.id}&folderId=${currentProject.folderId}`
                 );
                 const data = await response.json();
 

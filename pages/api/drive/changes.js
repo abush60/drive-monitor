@@ -14,16 +14,17 @@ export default async function handler(req, res) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { pageToken, projectId } = req.query;
+        const { pageToken, projectId, folderId } = req.query;
 
-        if (!pageToken || !projectId) {
-            return res.status(400).json({ error: 'pageToken and projectId are required' });
+        if (!pageToken || !projectId || !folderId) {
+            return res.status(400).json({ error: 'pageToken, projectId, and folderId are required' });
         }
 
         const result = await processWebhookNotification(
             session.accessToken,
             pageToken,
-            projectId
+            projectId,
+            folderId
         );
 
         return res.status(200).json({
