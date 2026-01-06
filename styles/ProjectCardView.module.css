@@ -25,6 +25,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+    position: relative;
 }
 
 .card:hover {
@@ -67,6 +68,43 @@
 .cardDate {
     font-size: 0.75rem;
     color: var(--color-gray-500);
+}
+
+.cardActions {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+}
+
+.actionButton {
+    background: transparent;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xs);
+    cursor: pointer;
+    color: var(--color-gray-600);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actionButton:hover {
+    background: var(--color-purple-50);
+    border-color: var(--color-purple-400);
+    color: var(--color-purple-700);
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.editActions {
+    display: flex;
+    gap: var(--spacing-xs);
+    justify-content: flex-end;
 }
 
 .emptyState {

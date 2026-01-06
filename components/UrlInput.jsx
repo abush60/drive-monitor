@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../styles/UrlInput.module.css';
 
 export default function UrlInput({ onUrlSubmit }) {
@@ -7,6 +7,35 @@ export default function UrlInput({ onUrlSubmit }) {
     const [url, setUrl] = useState('');
     const [projectName, setProjectName] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isFetchingFolderName, setIsFetchingFolderName] = useState(false);
+
+    // URLが変更されたらフォルダ名を自動取得
+    useEffect(() => {
+        const fetchFolderName = async () => {
+            if (!url || !url.includes('drive.google.com')) return;
+
+            setIsFetchingFolderName(true);
+            try {
+                const response = await fetch(`/api/drive/folders?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+
+                if (data.success && data.hierarchy?.name) {
+                    // プロジェクト名が空の場合のみ、フォルダ名を設定
+                    if (!projectName) {
+                        setProjectName(data.hierarchy.name);
+                    }
+                }
+            } catch (error) {
+                console.error('フォルダ名の取得エラー:', error);
+            } finally {
+                setIsFetchingFolderName(false);
+            }
+        };
+
+        // デバウンス処理（500ms待ってから実行）
+        const timeoutId = setTimeout(fetchFolderName, 500);
+        return () => clearTimeout(timeoutId);
+    }, [url]);
 
     const handleClick = (e) => {
         const rect = e.target.getBoundingClientRect();
@@ -59,17 +88,6 @@ export default function UrlInput({ onUrlSubmit }) {
                         <h3 className={styles.popupTitle}>Google Drive URL を指定</h3>
                         <form onSubmit={handleSubmit}>
                             <div className={styles.formGroup}>
-                                <label className={styles.formLabel}>プロジェクト名</label>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="プロジェクト名（省略可）"
-                                    value={projectName}
-                                    onChange={(e) => setProjectName(e.target.value)}
-                                />
-                            </div>
-
-                            <div className={styles.formGroup}>
                                 <label className={styles.formLabel}>Google Drive URL</label>
                                 <input
                                     type="url"
@@ -78,6 +96,27 @@ export default function UrlInput({ onUrlSubmit }) {
                                     value={url}
                                     onChange={(e) => setUrl(e.target.value)}
                                     required
+                                />
+                                {isFetchingFolderName && (
+                                    <small style={{ color: 'var(--color-gray-500)', fontSize: '0.75rem' }}>
+                                        フォルダ名を取得中...
+                                    </small>
+                                )}
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label className={styles.formLabel}>
+                                    プロジェクト名
+                                    <small style={{ marginLeft: '0.5rem', color: 'var(--color-gray-500)' }}>
+                                        （変更可能）
+                                    </small>
+                                </label>
+                                <input
+                                    type="text"
+                                    className="input"
+                                    placeholder="プロジェクト名"
+                                    value={projectName}
+                                    onChange={(e) => setProjectName(e.target.value)}
                                 />
                             </div>
 
@@ -93,7 +132,7 @@ export default function UrlInput({ onUrlSubmit }) {
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
-                                    disabled={isLoading}
+                                    disabled={isLoading || isFetchingFolderName}
                                 >
                                     {isLoading ? '処理中...' : '追加'}
                                 </button>

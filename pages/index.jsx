@@ -87,8 +87,8 @@ export default function Home() {
     const [changeLogs, setChangeLogs] = useState([]);
     const [isInitialized, setIsInitialized] = useState(false);
 
-    // ユーザーIDを取得
-    const userId = session?.user?.email || 'anonymous';
+    // ユーザーIDを取得（セッションが読み込まれるまで待つ）
+    const userId = session?.user?.email;
 
     // 階層からすべてのファイルを抽出
     const extractAllFiles = useCallback((node) => {
@@ -210,8 +210,11 @@ export default function Home() {
                 throw new Error(data.error);
             }
 
+            // プロジェクト名が指定されていない場合、フォルダ名を使用
+            const finalProjectName = projectName || data.hierarchy?.name || 'プロジェクト';
+
             // プロジェクトを作成
-            const project = createProject(projectName, url, data.folderId, userId);
+            const project = createProject(finalProjectName, url, data.folderId, userId);
 
             // ページトークンを取得
             const tokenResponse = await fetch('/api/drive/pageToken');
