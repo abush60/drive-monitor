@@ -4,12 +4,13 @@ import styles from '../styles/LoginScreen.module.css';
 export default function LoginScreen() {
     return (
         <div className={styles.container}>
-            {/* 背景のアニメーション要素 */}
-            <div className={styles.backgroundShapes}>
-                <div className={styles.shape1}></div>
-                <div className={styles.shape2}></div>
-                <div className={styles.shape3}></div>
-                <div className={styles.shape4}></div>
+            {/* 幾何学図形の背景 */}
+            <div className={styles.geometricShapes}>
+                <div className={styles.circle1}></div>
+                <div className={styles.circle2}></div>
+                <div className={styles.square1}></div>
+                <div className={styles.square2}></div>
+                <div className={styles.triangle}></div>
             </div>
 
             <div className={styles.content}>
@@ -17,13 +18,8 @@ export default function LoginScreen() {
                 <div className={styles.header}>
                     <div className={styles.logoContainer}>
                         <svg className={styles.logo} width="80" height="80" viewBox="0 0 24 24" fill="none">
-                            <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" fill="url(#gradient1)" />
-                            <defs>
-                                <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stopColor="#8B5CF6" />
-                                    <stop offset="100%" stopColor="#EC4899" />
-                                </linearGradient>
-                            </defs>
+                            <rect x="4" y="6" width="16" height="14" rx="2" fill="#7C3AED" />
+                            <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" fill="#A78BFA" />
                         </svg>
                     </div>
                     <h1 className={styles.title}>Drive Monitor</h1>
@@ -57,7 +53,7 @@ export default function LoginScreen() {
                 <div className={styles.features}>
                     <div className={styles.featureCard}>
                         <div className={styles.featureIcon}>
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" />
                             </svg>
                         </div>
@@ -67,7 +63,7 @@ export default function LoginScreen() {
 
                     <div className={styles.featureCard}>
                         <div className={styles.featureIcon}>
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
                             </svg>
                         </div>
@@ -77,7 +73,7 @@ export default function LoginScreen() {
 
                     <div className={styles.featureCard}>
                         <div className={styles.featureIcon}>
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
                             </svg>
                         </div>
